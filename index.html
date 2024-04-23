@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Drawing on Canvas</title>
+<style>
+    #scrollContainer {
+        margin: 0 100px; 
+        width: 900px; 
+        height: 900px; 
+        overflow: scroll; 
+        background-color: lightgrey;
+    }
+
+    #zoomWrapper {
+        position: relative; 
+        width: fit-content; 
+        margin: 30px auto; 
+        border: 1px solid black;
+    }
+
+    #zoomTarget {
+        width: fit-content;
+    }
+
+    #content {
+        width: 450px; 
+        height: 450px; 
+        background-color: white;
+    }
+
+    #myCanvas {
+        position: absolute; 
+        top: 0;
+    }
+  </style>
+<script>
+    window.onload = function() {
+        const ZOOM_SPEED = 0.1;
+        let zoom = 1;
+        const wrapper = document.getElementById("zoomWrapper");
+        const target = document.getElementById("zoomTarget");
+
+        const width = target.offsetWidth;
+        const height = target.offsetHeight;
+
+        target.addEventListener("wheel", function(e){
+            if (!e.ctrlKey) {
+                return;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            target.style.transformOrigin = "top left";
+
+            if (e.deltaY > 0){    
+                target.style.transform = `scale(${zoom += ZOOM_SPEED})`;  
+            } else {    
+                target.style.transform = `scale(${zoom -= ZOOM_SPEED})`;  
+            }
+            wrapper.style.width = `${zoom*width}px`;
+            wrapper.style.height = `${zoom*height}px`;
+        });
+
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = width;
+        canvas.height = height;
+
+        ctx.scale(0.8, 0.8);
+
+        // draw stuff here
+        ctx.beginPath();
+        ctx.lineWidth = 5;
+        ctx.strokeStyle = "orange";
+        ctx.moveTo(50, 150);
+        ctx.lineTo(250, 50);
+        ctx.lineTo(70, 100);
+        ctx.arc(150, 100, 70, 0, 2 * Math.PI, false);
+        ctx.stroke();
+
+        ctx.strokeStyle = "green";
+        ctx.strokeRect(0, 0, width, height);
+                
+        ctx.fillStyle = "red";
+        ctx.fillRect(220, 220, 150, 100);
+
+        ctx.beginPath();
+        ctx.lineWidth = 10;
+        ctx.strokeStyle = "blue";
+        ctx.lineCap = "round";
+        ctx.moveTo(250, 450);
+        ctx.arc(250, 450, 80, 1.2 * Math.PI, 1.8 * Math.PI, false);
+        ctx.stroke();
+    };
+</script>
+</head>
+<body>
+    <div id="scrollContainer">
+        <div id="zoomWrapper">
+            <div id="zoomTarget">
+                <div id="content"></div>
+                <canvas id="myCanvas"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
