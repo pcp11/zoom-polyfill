@@ -83,19 +83,19 @@
         ctx.strokeRect(0, 0, width, height);
                 
         ctx.fillStyle = "red";
-        ctx.fillRect(220, 220, 150, 100);
+        ctx.fillRect(230, 150, 150, 100);
 
         ctx.beginPath();
         ctx.lineWidth = 10;
         ctx.strokeStyle = "blue";
         ctx.lineCap = "round";
-        ctx.moveTo(250, 450);
-        ctx.arc(250, 450, 80, 1.2 * Math.PI, 1.8 * Math.PI, false);
+        ctx.moveTo(250, 400);
+        ctx.arc(250, 400, 80, 1.2 * Math.PI, 1.8 * Math.PI, false);
         ctx.stroke();
 
         ctx.fillStyle = "black";
         ctx.font = "32px Arial";
-        ctx.fillText("Scroll with ctrl + mouse-wheel", 10, 280);
+        ctx.fillText("Zoom with ctrl + mouse-wheel", 10, 280);
     };
 </script>
 </head>
